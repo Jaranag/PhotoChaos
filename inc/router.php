@@ -19,7 +19,7 @@ function loadContent($id_page) {
             include 'inc/register.php';
             break;
         case "home":
-            include 'inc/home.php';
+            include 'inc/home.phtml';
             break;            
         default:
             include 'inc/error404.php';

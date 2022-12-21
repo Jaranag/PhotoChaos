@@ -16,7 +16,7 @@ function loadContent($id_page) {
             include 'inc/login.phtml';
             break;      
         case "register":
-            include 'inc/register.php';
+            include 'inc/register.phtml';
             break;
         case "home":
             include 'inc/home.phtml';

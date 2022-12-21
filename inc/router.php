@@ -15,8 +15,15 @@ function loadContent($id_page) {
         case "":
             include 'inc/login.php';
             break;      
+        case "register":
+            include 'inc/register.php';
+            break;
+        case "home":
+            include 'inc/home.php';
+            break;            
         default:
             include 'inc/error404.php';
             break;
+     
     }
 }

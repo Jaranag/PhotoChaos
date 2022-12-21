@@ -13,7 +13,7 @@ function loadContent($id_page) {
     
     switch ($id_page) {
         case "":
-            include 'inc/login.php';
+            include 'inc/login.phtml';
             break;      
         case "register":
             include 'inc/register.php';

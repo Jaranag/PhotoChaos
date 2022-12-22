@@ -48,7 +48,7 @@ CREATE TABLE `photo` (
 
 LOCK TABLES `photo` WRITE;
 /*!40000 ALTER TABLE `photo` DISABLE KEYS */;
-INSERT INTO `photo` VALUES (0,'Irritable Bowel Syndrome Therapy','arcused','jpeg','2022-11-01 01:34:22',0,0,1,0),(1,'Antiseptic','luctus','jpeg','2022-03-01 00:58:29',0,0,1,5),(2,'Phentermine Hydrochloride','leoodioporttitor','png','2022-07-21 17:48:54',0,0,2,4),(3,'EC-Naprosyn','hachabitasse','jpeg','2021-12-19 19:57:10',0,0,3,2),(4,'HEADACHE VOMITING','faucibuoorciluctus','jpeg','2022-01-25 22:48:49',0,0,4,0);
+INSERT INTO `photo` VALUES (0,'Irritable Bowel Syndrome Therapy','arcused','jpg','2022-11-01 01:34:22',0,0,1,0),(1,'Antiseptic','luctus','jpg','2022-03-01 00:58:29',0,0,1,5),(2,'Phentermine Hydrochloride','leoodioporttitor','jpg','2022-07-21 17:48:54',0,0,2,4),(3,'EC-Naprosyn','hachabitasse','jpg','2021-12-19 19:57:10',0,0,3,2),(4,'HEADACHE VOMITING','faucibuoorciluctus','jpg','2022-01-25 22:48:49',0,0,4,0);
 /*!40000 ALTER TABLE `photo` ENABLE KEYS */;
 UNLOCK TABLES;
 

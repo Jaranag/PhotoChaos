@@ -13,12 +13,12 @@ class Model
                 sprintf(
                     "%s:host=%s;dbname=%s",
                     "mysql",
-                    "127.0.0.1:3307",
+                    "127.0.0.1:3306",
                     "photochaos"
                 ),
                 /*configurar con las credenciales que toquen*/
                 "root",  //user
-                "Thunderbitch-77", //password
+                "", //password
                 array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8")
             );
         } catch (PDOException $ex) {
@@ -27,12 +27,12 @@ class Model
                 sprintf(
                     "%s:host=%s;dbname=%s",
                     "mysql",
-                    "127.0.0.1:3307",
+                    "127.0.0.1:3306",
                     "photochaos"
                 ),
                 /*configurar con las credenciales que toquen*/
                 "root", //user
-                "Thunderbitch-77", //password
+                "", //password
                 array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8")
             );
 
@@ -68,7 +68,7 @@ class Model
             CONSTRAINT `fk_photo_photographer1` FOREIGN KEY (`id_autor`) REFERENCES `photographer` (`id_photographer`) ON DELETE RESTRICT ON UPDATE CASCADE
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;";
 
-        $sql .= "INSERT INTO `photo` VALUES (0,'Irritable Bowel Syndrome Therapy','arcused','jpeg','2022-11-01 01:34:22',0,0,1,0),(1,'Antiseptic','luctus','jpeg','2022-03-01 00:58:29',0,0,1,5),(2,'Phentermine Hydrochloride','leoodioporttitor','png','2022-07-21 17:48:54',0,0,2,4),(3,'EC-Naprosyn','hachabitasse','jpeg','2021-12-19 19:57:10',0,0,3,2),(4,'HEADACHE VOMITING','faucibuoorciluctus','jpeg','2022-01-25 22:48:49',0,0,4,0);";
+        $sql .= "INSERT INTO `photo` VALUES (0,'Irritable Bowel Syndrome Therapy','arcused','jpg','2022-11-01 01:34:22',0,0,1,0),(1,'Antiseptic','luctus','jpg','2022-03-01 00:58:29',0,0,1,5),(2,'Phentermine Hydrochloride','leoodioporttitor','png','2022-07-21 17:48:54',0,0,2,4),(3,'EC-Naprosyn','hachabitasse','jpg','2021-12-19 19:57:10',0,0,3,2),(4,'HEADACHE VOMITING','faucibuoorciluctus','jpg','2022-01-25 22:48:49',0,0,4,0);";
 
         $sql .= "CREATE TABLE `photo_has_tag` (
             `id_photo` int unsigned NOT NULL,

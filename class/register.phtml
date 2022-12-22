@@ -101,13 +101,16 @@
         private function addUser() {
             /* Database credentials. Assuming you are running MySQL
             server with default setting (user 'root' with no password) */
-            define('DB_SERVER', 'localhost');
-            define('DB_USERNAME', 'root');
+            define('DB_SERVER', '');
+            define('DB_USERNAME', '');
             define('DB_PASSWORD', '');
-            define('DB_NAME', 'demo');
+            define('DB_FIRST_NAME', '');
+            define('DB_LAST_NAME', '');
+            define('DB_BIRTHDATE', '');
+            define('DB_IMAGE_PROFILE', '');
  
             /* Attempt to connect to MySQL database */
-            $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+            $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_FIRST_NAME, DB_LAST_NAME, DB_BIRTHDATE, DB_IMAGE_PROFILE);
  
             // Check connection
             if($mysqli === false){
@@ -117,8 +120,10 @@
             require_once "config.php";
  
             // Define variables and initialize with empty values
-            $username = $password = $confirm_password = "";
+            $_username = $_password = $_confirm_password = "";
+            $_first_name = $_last_name = $_birthdate = $_image_profile = "";
             $username_err = $password_err = $confirm_password_err = "";
+            $_first_name_err = $_last_name_err = $_birthdate_err = $_image_profile_err = "";
  
             // Processing form data when form is submitted
             if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -128,9 +133,18 @@
                 $username_err = "Please enter a username.";
                 } elseif(!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["username"]))){
                 $username_err = "Username can only contain letters, numbers, and underscores.";
+                } else{ 
+                // Prepare a select statement
+                $sql = "SELECT id FROM users WHERE username = ?";
+                }
+            // Validate username
+            if(empty(trim($_POST["username"]))){
+                $username_err = "Please enter a username.";
+                } elseif(!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["username"]))){
+                $username_err = "Username can only contain letters, numbers, and underscores.";
                 } else{
-        // Prepare a select statement
-        $sql = "SELECT id FROM users WHERE username = ?";
+                // Prepare a select statement
+                $sql = "SELECT id_user FROM user WHERE username = ?";
         
         if($stmt = $mysqli->prepare($sql)){
             // Bind variables to the prepared statement as parameters
@@ -164,26 +178,47 @@
     } elseif(strlen(trim($_POST["password"])) < 6){
         $password_err = "Password must have atleast 6 characters.";
     } else{
-        $password = trim($_POST["password"]);
+        $_password = trim($_POST["password"]);
     }
     
-    // Validate confirm password
-    if(empty(trim($_POST["confirm_password"]))){
+        // Validate confirm password
+        if(empty(trim($_POST["confirm_password"]))){
         $confirm_password_err = "Please confirm password.";     
-    } else{
-        $confirm_password = trim($_POST["confirm_password"]);
+        } else{
+        $_confirm_password = trim($_POST["confirm_password"]);
         if(empty($password_err) && ($password != $confirm_password)){
             $confirm_password_err = "Password did not match.";
         }
+
     }
-    
-    // Check input errors before inserting in database
-    if(empty($username_err) && empty($password_err) && empty($confirm_password_err)){
+
+    // Validate first name
+    if(empty(trim($_POST["_first_name"]))){
+        $_first_name_err = "Please confirm your first name.";     
+        } else{
+        $_first_name = trim($_POST["_first_name"]);
+    }
+
+    if(empty(trim($_POST["_last_name"]))){
+        $_last_name = "Please confirm your last name.";     
+        } else{
+        $_last_name = trim($_POST["_last_name"]);
+    }
+
+    if(empty(trim($_POST["_birthdate"]))){
+        $_birthdate = "Please confirm your birth date.";     
+        } else{
+        $_last_name = trim($_POST["_last_name"]);
+    }
+
+
+        // Check input errors before inserting in database
+        if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($_first_name_err) && empty($_last_name_err) && empty($_birthdate_err)){
         
         // Prepare an insert statement
-        $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
+        $sql = "INSERT INTO users (username, password, first_name, last_name, birthdate, image_profile ) VALUES ($this -> _username, $this -> _password, $this -> _first_name, $this -> _last_name, $this -> _birthdate, $this -> _image_profile)";
          
-        if($stmt = $mysqli->prepare($sql)){
+            if($stmt = $mysqli->prepare($sql)){
             // Bind variables to the prepared statement as parameters
             $stmt->bind_param("ss", $param_username, $param_password);
             
@@ -204,11 +239,11 @@
         }
     }
     
-    // Close connection
-    $mysqli->close();
-}
-        }
+            // Close connection
+             $mysqli->close();
 
+            }   
+        }
     }
 
    

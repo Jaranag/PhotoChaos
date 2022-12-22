@@ -9,14 +9,15 @@ class Home extends Model
     {
         $_db = new Model();
         $this->photos = $_db->getTable('photo');
+        $this->photos = json_decode(json_encode($this->photos), true);
     }
 
     public function urlPhoto($id_photo)
     {
         foreach ($this->photos as $photo) {
             if ($photo['id_photo'] == $id_photo) {
-                $filePhoto = $photo['file_name'] . $photo['file_extension'];
-                $urlPhoto = "img/photos/" . $filePhoto;
+                $filePhoto = $photo['file_name'] . '.' . $photo['file_extension'];
+                $urlPhoto = "../PhotoChaos/img/photos/" . $filePhoto;
                 return $urlPhoto;
             }
         }
@@ -24,10 +25,10 @@ class Home extends Model
     public function showPhotos()
     {
         $urlsPhotos = array();
-
         foreach ($this->photos as $photo) {
-            $filePhoto = $photo['file_name'] . $photo['file_extension'];
-            $urlsPhotos[] = $filePhoto;
+            $filePhoto = $photo['file_name'] . '.' . $photo['file_extension'];
+            $urlPhoto = "../PhotoChaos/img/photos/" . $filePhoto;
+            $urlsPhotos[] = $urlPhoto;
         }
 
         return $urlsPhotos;

@@ -1,0 +1,195 @@
+<?php 
+
+    Class User{
+
+        private int $_id_user;
+        private string $_first_name;
+        private string $_last_name;
+        private string $_username;
+        private string $_password;
+        private string $_email;
+        private int $_created_at;
+        private int $_birthdate;
+        private string $_presentation;
+        private int $_total_uploads;
+        private int $_total_votes;
+        private string $_image_profile;
+
+        private function __construct($_id_user,$_first_name,$_last_name,$_username,$_password,$_email,$_created_at,$_birthdate,$_presentation,$_total_uploads,$_total_votes,$_image_profile){
+           
+            $this -> _id_user = $_id_user;
+            $this -> _first_name = $_first_name;
+            $this -> _last_name = $_last_name;
+            $this -> _username = $_username;
+            $this -> _password = $_password;
+            $this -> _email = $_email;
+            $this -> _created_at = $_created_at;
+            $this -> _birthdate = $_birthdate;
+            $this -> _presentation = $_presentation;
+            $this -> _total_uploads = $_total_uploads;
+            $this -> _total_votes = $_total_votes;
+            $this -> _image_profile = $_image_profile;
+        
+        }
+
+        private function get_id_user() {
+            return $this-> id_user; 
+        }    
+
+        private function get_first_name() {
+            return $this -> _first_name; 
+        }    
+
+        private function get_last_name() {
+            return $this -> _last_name; 
+        }    
+
+        private function get_username() {
+            return $this -> _username; 
+        }    
+
+        private function get_password() {
+            return $this -> _password; 
+        }    
+
+        private function get_email() {
+            return $this -> _email; 
+        }    
+
+        private function get_created_at() {
+            return $this -> _created_at; 
+        }    
+
+        private function get_birthdate() {
+            return $this -> _birthdate; 
+        }    
+
+        private function get_presentation() {
+            return $this -> _presentation; 
+        }    
+
+        private function get_total_uploads() {
+            return $this-> _total_uploads; 
+        }    
+
+        private function get_total_votes() {
+            return $this -> _total_votes; 
+        }
+        
+        private function get_image_profile() {
+            return $this -> _image_profile; 
+        }
+            
+        private function set_id_user($_id_user) {
+            $this -> _id_user = $_id_user;
+        }
+
+        private function set_first_name($_first_name) {
+            $this -> _first_name = $_first_name;
+        }
+
+        private function set_last_name($_last_name) {
+            $this -> _last_name = $_last_name;
+        }
+
+        private function set_username($_username) {
+            $this -> _username = $_username;
+        }
+
+        private function set_password($_password) {
+            $this -> _password = $_password;
+        }
+
+        private function set_email($_email) {
+            $this -> _email = $_email;
+        }
+
+        private function set_created_at($_created_at) {
+            $this -> _created_at = $_created_at;
+        }
+
+        private function set_birthdate($_birthdate) {
+            $this -> _birthdate = $_birthdate;
+        }
+
+        private function set_presentation($_presentation) {
+            $this -> _presentation = $_presentation;
+        }
+
+        private function set_total_uploads($_total_uploads) {
+            $this -> _total_uploads = $_total_uploads;
+        }
+
+        private function set_total_votes($_total_votes) {
+            $this -> _total_votes = $_total_votes;
+        }
+
+        private function set_image_profile($_image_profile) {
+            $this -> _image_profile = $_image_profile;
+        }
+
+    }
+        
+    class userNameService
+    {
+        private $_username;    // using protected so they can be accessed
+        private $_password; // and overidden if necessary
+        private $_db;       // stores the database handler
+       
+    
+        public function __construct(PDO $db, $_username, $_password) 
+        {
+           $this->_db = $db;
+           $this->_username = $_username;
+           $this->_password = $_password;
+        }
+    
+        public function login()
+        {
+            $_username = $this->_checkCredentials();
+            if ($_username) {
+                $this->_username = $_username; // store it so it can be accessed later
+                $_SESSION['_id_user'] = $_username['_id_user'];
+                return $_username['_id_user'];
+            }
+            return false;
+        }
+    
+        protected function _checkCredentials()
+        {
+            $stmt = $this->_db->prepare('SELECT * FROM username WHERE username=?');
+            $stmt->execute(array($this->_username));
+            if ($stmt->rowCount() > 0) {
+                $_username = $stmt->fetch(PDO::FETCH_ASSOC);
+                $submitted_pass = sha1($_username['salt'] . $this->_password);
+                if ($submitted_pass == $_username['password']) {
+                    return $_username;
+                }
+            }
+            return false;
+        }
+    
+        public function get_userName()
+        {
+            return $this->_username;
+        }
+    }
+        
+
+
+
+   
+    
+
+
+
+
+
+
+
+
+
+
+
+
+?>

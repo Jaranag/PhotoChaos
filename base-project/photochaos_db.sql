@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `photochaos` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `photochaos`;
 -- MySQL dump 10.13  Distrib 8.0.30, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: photochaos
@@ -35,8 +37,8 @@ CREATE TABLE `photo` (
   PRIMARY KEY (`id_photo`,`id_autor`),
   UNIQUE KEY `id_photo_UNIQUE` (`id_photo`),
   UNIQUE KEY `file_name_UNIQUE` (`file_name`),
-  KEY `fk_photo_user1_idx` (`id_autor`),
-  CONSTRAINT `fk_photo_user1` FOREIGN KEY (`id_autor`) REFERENCES `user` (`id_user`) ON DELETE RESTRICT ON UPDATE CASCADE
+  KEY `fk_photo_photographer1_idx` (`id_autor`),
+  CONSTRAINT `fk_photo_photographer1` FOREIGN KEY (`id_autor`) REFERENCES `photographer` (`id_photographer`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -105,14 +107,14 @@ INSERT INTO `tag` VALUES (1,'drugs'),(0,'plant');
 UNLOCK TABLES;
 
 --
--- Table structure for table `user`
+-- Table structure for table `photographer`
 --
 
-DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `photographer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user` (
-  `id_user` int unsigned NOT NULL,
+CREATE TABLE `photographer` (
+  `id_photographer` int unsigned NOT NULL,
   `username` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
   `password` varchar(100) NOT NULL,
@@ -124,8 +126,8 @@ CREATE TABLE `user` (
   `image_profile` varchar(50) DEFAULT NULL,
   `total_uploads` int DEFAULT NULL,
   `total_votes` int DEFAULT NULL,
-  PRIMARY KEY (`id_user`),
-  UNIQUE KEY `id_user_UNIQUE` (`id_user`),
+  PRIMARY KEY (`id_photographer`),
+  UNIQUE KEY `id_photographer_UNIQUE` (`id_photographer`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   UNIQUE KEY `username_UNIQUE` (`username`),
   UNIQUE KEY `password_UNIQUE` (`password`)
@@ -133,13 +135,13 @@ CREATE TABLE `user` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `user`
+-- Dumping data for table `photographer`
 --
 
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (0,'bsmallacombe0','bsmallacombe0@bizjournals.com','416zinvelzj','2022-03-31 03:51:03','BreeSmal','Smallacombe','1991-10-22','dfasdfsa','gqerqg',0,0),(1,'dmeneely1','dmeneely1@epa.gov','aCevQuNqBq','2022-04-14 11:11:00','Dasie','Meneely','2013-06-12','fasd','gqerg',2,0),(2,'mstandering2','mstandering2@weather.com','VfT3yMoevkrQ','2022-01-08 02:41:55','Mahala','Standering','2007-07-09','fasd','gqeg',1,3),(3,'gparris3','gparris3@rediff.com','0GlV8c','2022-05-11 20:26:57','Gayla','Parris','2021-04-24','fasdf','gqeg',1,1),(4,'rrapier4','rrapier4@google.es','ilZ9N6t87tE','2022-11-12 21:30:36','Rustin','Rapier','2022-06-10','gasdga','erqgr',1,0);
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+LOCK TABLES `photographer` WRITE;
+/*!40000 ALTER TABLE `photographer` DISABLE KEYS */;
+INSERT INTO `photographer` VALUES (0,'bsmallacombe0','bsmallacombe0@bizjournals.com','416zinvelzj','2022-03-31 03:51:03','BreeSmal','Smallacombe','1991-10-22','dfasdfsa','gqerqg',0,0),(1,'dmeneely1','dmeneely1@epa.gov','aCevQuNqBq','2022-04-14 11:11:00','Dasie','Meneely','2013-06-12','fasd','gqerg',2,0),(2,'mstandering2','mstandering2@weather.com','VfT3yMoevkrQ','2022-01-08 02:41:55','Mahala','Standering','2007-07-09','fasd','gqeg',1,3),(3,'gparris3','gparris3@rediff.com','0GlV8c','2022-05-11 20:26:57','Gayla','Parris','2021-04-24','fasdf','gqeg',1,1),(4,'rrapier4','rrapier4@google.es','ilZ9N6t87tE','2022-11-12 21:30:36','Rustin','Rapier','2022-06-10','gasdga','erqgr',1,0);
+/*!40000 ALTER TABLE `photographer` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -153,14 +155,14 @@ CREATE TABLE `vote` (
   `id_vote` int unsigned NOT NULL,
   `score` int NOT NULL,
   `comments` varchar(250) DEFAULT NULL,
-  `id_user` int unsigned NOT NULL,
+  `id_photographer` int unsigned NOT NULL,
   `id_photo` int unsigned NOT NULL,
-  PRIMARY KEY (`id_vote`,`id_user`,`id_photo`),
+  PRIMARY KEY (`id_vote`,`id_photographer`,`id_photo`),
   UNIQUE KEY `id_vote_UNIQUE` (`id_vote`),
-  KEY `fk_vote_user_idx` (`id_user`),
+  KEY `fk_vote_photographer_idx` (`id_photographer`),
   KEY `fk_vote_photo1_idx` (`id_photo`),
   CONSTRAINT `fk_vote_photo1` FOREIGN KEY (`id_photo`) REFERENCES `photo` (`id_photo`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `fk_vote_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE RESTRICT ON UPDATE CASCADE
+  CONSTRAINT `fk_vote_photographer` FOREIGN KEY (`id_photographer`) REFERENCES `photographer` (`id_photographer`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -183,4 +185,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-20 11:05:52
+-- Dump completed on 2022-12-22  9:20:41

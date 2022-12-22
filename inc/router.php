@@ -13,10 +13,17 @@ function loadContent($id_page) {
     
     switch ($id_page) {
         case "":
-            include 'inc/login.php';
+            include 'inc/login.phtml';
             break;      
+        case "register":
+            include 'inc/register.phtml';
+            break;
+        case "home":
+            include 'inc/home.phtml';
+            break;            
         default:
             include 'inc/error404.php';
             break;
+     
     }
 }
